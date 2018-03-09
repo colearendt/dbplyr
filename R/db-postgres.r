@@ -36,8 +36,8 @@ sql_translate_env.PostgreSQLConnection <- function(con) {
           sql_expr((!!x) %~% (!!pattern))
         }
       },
-      paste  = sql_paste(" "),
-      paste0 = sql_paste(""),
+      paste  = sql_paste_alt(" "),
+      paste0 = sql_paste_alt(""),
       # stringr functions
       str_locate  = function(string, pattern) {
         sql_expr(strpos(!!string, !!pattern))
