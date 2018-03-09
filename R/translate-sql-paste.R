@@ -12,6 +12,23 @@ sql_paste <- function(default_sep, f = "CONCAT_WS") {
 
 #' @export
 #' @rdname sql_variant
+sql_paste_alt <- function(default_sep, f = "||") {
+  f <- toupper(f)
+
+  function(..., sep = default_sep, collapse = NULL){
+    check_collapse(collapse)
+
+    purrr::reduce(
+      list(...)
+      , function(x,y){
+        sql_expr(UQ(f)(UQ(f)(!!x,!!default_sep),!!y))
+      }
+    )
+  }
+}
+
+#' @export
+#' @rdname sql_variant
 sql_paste_infix <- function(default_sep, op, cast) {
   force(default_sep)
   op <- as.symbol(paste0("%", op, "%"))
